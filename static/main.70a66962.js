@@ -230,7 +230,7 @@
     }, "4FPD": function (t, e, n) {
         t.exports = n.p + "assets/apple-icon-180x180.png"
     }, "4hhi": function (t, e, n) {
-        t.exports = n.p + "assets/images/profil.jpg"
+        t.exports = n.p + "assets/images/profile.jpg"
     }, "4vuW": function (t, e, n) {
         t.exports = n.p + "assets/images/work001-03.jpg"
     }, "6wzU": function (t, e, n) {
