@@ -1,8 +1,19 @@
 from flask import Flask, render_template, \
-    url_for, request, redirect
+    request, redirect
 import csv
+import smtplib
+import statics
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
+app.config.update(
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=465,
+    MAIN_USE_SSL=True,
+    MAIN_USERNAME=statics.username,
+    MAIN_PASSWORD=statics.password
+)
+mail = Mail(app)
 print(__name__)
 
 
@@ -36,12 +47,17 @@ def write_to_csv(data):
 @app.route('/submit_form', methods=['POST', 'GET'])
 def submit_form():
     if request.method == 'POST':
-        try:
-            data = request.form.to_dict()
-            # write_to_file(data)
-            write_to_csv(data)
-            return redirect('/thankyou.html')
-        except:
-            return 'did not save to database'
+        data = request.form.to_dict()
+        send_email(data)
+        # write_to_file(data)
+        # write_to_csv(data)
+        return redirect('/thankyou.html')
     else:
         return 'something went wrong'
+
+
+def send_email(data):
+    msg = mail.send(
+        message=data['email'] + '\n' + data['subject'] + '\n' + data['message']
+    )
+    return msg
